@@ -17,6 +17,7 @@
 package com.google.samples.apps.sunflower
 
 import android.app.Application
+import androidx.databinding.ktx.BuildConfig
 import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 
