@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.android.navigation.databinding.FragmentGameBinding
 
 class GameFragment : Fragment() {
@@ -69,6 +70,7 @@ class GameFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = DataBindingUtil.inflate<FragmentGameBinding>(
                 inflater, R.layout.fragment_game, container, false)
+        //fragment_game 레이아웃요소 바인딩
 
         // Shuffles the questions and sets the question index to the first question.
         randomizeQuestions()
@@ -77,13 +79,17 @@ class GameFragment : Fragment() {
         binding.game = this
 
         // Set the onClickListener for the submitButton
+        //바인딩된 submit_button 클릭시 작동
         binding.submitButton.setOnClickListener @Suppress("UNUSED_ANONYMOUS_PARAMETER")
         { view: View ->
             val checkedId = binding.questionRadioGroup.checkedRadioButtonId
+            //checkedId에 questionRadioGroup의 체크된 버튼 id를 입력
             // Do nothing if nothing is checked (id == -1)
             if (-1 != checkedId) {
+                //버튼 입력이 -1이 아니고
                 var answerIndex = 0
                 when (checkedId) {
+                    //두번째,세번째,네번째 버튼일때 각각 answerIndex를 1,2,3으로 변경
                     R.id.secondAnswerRadioButton -> answerIndex = 1
                     R.id.thirdAnswerRadioButton -> answerIndex = 2
                     R.id.fourthAnswerRadioButton -> answerIndex = 3
@@ -91,16 +97,23 @@ class GameFragment : Fragment() {
                 // The first answer in the original question is always the correct one, so if our
                 // answer matches, we have the correct answer.
                 if (answers[answerIndex] == currentQuestion.answers[0]) {
+                    //answer프로퍼티의 [인덱스]의 값이 현재 currentQuestion.answers[0]인덱스의 값과 같고
                     questionIndex++
                     // Advance to the next question
                     if (questionIndex < numQuestions) {
+                        //questionIndex의 값이 numQuestions보다 작다면
                         currentQuestion = questions[questionIndex]
+                        //현재 문제를 다음 문제로 변경, questionIndex의 증가로
                         setQuestion()
                         binding.invalidateAll()
                     } else {
+                        //questionIndex의 값이 numQuestions보다 작지 않다면 승리 화면으로 이동
+                        view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment)
                         // We've won!  Navigate to the gameWonFragment.
                     }
                 } else {
+                    //answers[answerIndex] == currentQuestion.answers[0]가 아닐때 게임 오버 화면으로 이동
+                    view.findNavController().navigate((R.id.action_gameFragment_to_gameOverFragment))
                     // Game over! A wrong answer sends us to the gameOverFragment.
                 }
             }
