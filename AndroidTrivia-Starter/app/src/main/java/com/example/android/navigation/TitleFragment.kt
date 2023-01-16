@@ -1,6 +1,8 @@
 package com.example.android.navigation
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
@@ -33,12 +35,67 @@ class TitleFragment : Fragment() {
             R.layout.fragment_title, container, false)
         //새로 생성된 확장된 레이아웃에 대한 바인딩
         binding.playButton.setOnClickListener { view : View ->
-            view.findNavController().navigate(R.id.action_titleFragment_to_gameFragment)
+            view.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToGameFragment())
+        }
+        binding.ruleButton.setOnClickListener { view : View ->
+            view.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToRulesFragment())
+        }
+        binding.aboutButton.setOnClickListener { view : View ->
+            view.findNavController().navigate(TitleFragmentDirections.actionTitleFragmentToAboutFragment())
         }
         setHasOptionsMenu(true)
+        Log.i("TitleFragment", "onCreateView Called")
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.i("TitleFragment", "onAttach Called")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.i("TitleFragment", "onCreate Called")
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.i("TitleFragment", "onViewCreated Called")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.i("TitleFragment", "onStart Called")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.i("TitleFragment", "onResume Called")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.i("TitleFragment", "onPause Called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.i("TitleFragment", "onStop Called")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i("TitleFragment", "onDestroyView Called")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.i("TitleFragment", "onDetach Called")
+    }
+    /*
+    onAttach -> onCrate -> onCreateView-> onViewCreated -> onStart -> (FragmentVisible) -> onResume -> (Fragment has focus) ->
+        onPause -> (Fragment loses focus) -> onStop -> onDestroyView -> (Frament is unvisible) -> onDestroy -> onDetach
+    */
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.option_menu, menu)

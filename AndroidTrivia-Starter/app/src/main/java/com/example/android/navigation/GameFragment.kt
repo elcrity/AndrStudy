@@ -108,12 +108,17 @@ class GameFragment : Fragment() {
                         binding.invalidateAll()
                     } else {
                         //questionIndex의 값이 numQuestions보다 작지 않다면 승리 화면으로 이동
-                        view.findNavController().navigate(R.id.action_gameFragment_to_gameWonFragment)
+                        view.findNavController()
+                            .navigate(GameFragmentDirections
+                                .actionGameFragmentToGameWonFragment(numQuestions,questionIndex))
+                        //GameFragmentDirections로 GameWonFragment에 numQuestions, questionIndes 인수를 넘김
                         // We've won!  Navigate to the gameWonFragment.
                     }
                 } else {
                     //answers[answerIndex] == currentQuestion.answers[0]가 아닐때 게임 오버 화면으로 이동
-                    view.findNavController().navigate((R.id.action_gameFragment_to_gameOverFragment))
+                    view.findNavController()
+                        .navigate(GameFragmentDirections.
+                            actionGameFragmentToGameOverFragment(numQuestions,questionIndex))
                     // Game over! A wrong answer sends us to the gameOverFragment.
                 }
             }
