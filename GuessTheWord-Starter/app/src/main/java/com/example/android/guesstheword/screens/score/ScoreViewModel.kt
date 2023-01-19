@@ -9,3 +9,4 @@ class ScoreViewModel(finalScore: Int) : ViewModel() {
         Log.i("ScoreModelView", "Final score is $finalScore")
     }
 }
+//score에 필요한 프로퍼티
