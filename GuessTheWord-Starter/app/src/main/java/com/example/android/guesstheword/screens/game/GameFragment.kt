@@ -48,6 +48,7 @@ class GameFragment : Fragment() {
                 container,
                 false
         )
+        binding.gameViewModel = viewModel
 
         Log.i("GameFragment", "Called ViewModelProvider.get")
         viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
